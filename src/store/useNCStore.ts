@@ -1,5 +1,6 @@
 import { StateCreator } from "zustand";
 import { ButtonType } from "../components/pages/calculators/normal/normal-button-types";
+import { Errors } from "../utils/errors";
 
 const initialState = {
     number: 0,
@@ -29,6 +30,7 @@ export const createNCSlice: StateCreator<NCSlice, [], [], NCSlice> = (
 
     operation: 0,
     error: "",
+
     setButtonClicked: (value: number) => {
         if (value < 10) {
             if (get().number < 9999999999 && get().number > -9999999999) {
@@ -75,12 +77,18 @@ export const createNCSlice: StateCreator<NCSlice, [], [], NCSlice> = (
             case ButtonType.Times:
             case ButtonType.Minus:
             case ButtonType.Plus: {
-                set((state) => ({
-                    operation: value,
-                    newNumber: state.number,
-                    number: 0,
+                if (get().operation === 0) {
+                    set((state) => ({
+                        operation: value,
+                        newNumber: state.number,
+                        number: 0,
+                    }));
+                    break;
+                }
+                set(() => initialState);
+                set(() => ({
+                    error: Errors.INVALID_OPERATION,
                 }));
-                break;
             }
         }
     },

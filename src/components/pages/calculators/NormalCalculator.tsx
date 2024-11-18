@@ -26,18 +26,21 @@ export default function NormalCalculator() {
         ButtonType.Equal,
     ];
 
-    const { number, result } = useAppStore();
+    const { number, result, error } = useAppStore();
 
     return (
         <>
-            <div className="">
-                <p className="text-right">{result ? result : number}</p>
-            </div>
+            <p className="text-right">{result ? result : number}</p>
+
             <div className="gap-x-2 gap-y-2 grid grid-cols-4">
                 {buttons.map((button) => (
                     <Button key={button} value={button} />
                 ))}
             </div>
+
+            {error.length > 0 && (
+                <p className="text-sm text-center absolute">{error}</p>
+            )}
         </>
     );
 }

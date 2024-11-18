@@ -14,7 +14,7 @@ export default function Calculator() {
         }
     };
     return (
-        <div className="mx-auto my-auto text-4xl space-y-2">
+        <div className="mx-auto my-auto text-4xl space-y-2 p-12 min-h-screen">
             {showCalculator()}
         </div>
     );
